@@ -1,0 +1,210 @@
+% beamerthemeACIN.sty
+% Beamer theme matching the ACIN / TU Wien PowerPoint template
+% Colors, layout, and logo placement based on the official PPTX template
+
+\ProvidesPackage{beamerthemeACIN}[2026/03/06 ACIN TU Wien Beamer Theme]
+
+\mode<presentation>
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\RequirePackage{tikz}
+\RequirePackage{graphicx}
+\RequirePackage{calc}
+\RequirePackage{iftex}
+
+% ── Fonts ── Segoe UI (requires XeLaTeX or LuaLaTeX) ────────────────────────
+\ifxetex
+  \RequirePackage{fontspec}
+  \setsansfont{Segoe UI}
+\else\ifluatex
+  \RequirePackage{fontspec}
+  \setsansfont{Segoe UI}
+\fi\fi
+
+% ── Aspect ratio ──────────────────────────────────────────────────────────────
+% Use with: \documentclass[aspectratio=169]{beamer}
+
+% ── Colors ────────────────────────────────────────────────────────────────────
+\definecolor{ACINred}{HTML}{BA122B}
+\definecolor{TUblue}{HTML}{006699}
+\definecolor{ACINgray}{HTML}{7B7B7B}
+\definecolor{ACINlightgray}{HTML}{B2B2B2}
+\definecolor{ACINdarktext}{HTML}{000000}
+
+\setbeamercolor{structure}{fg=ACINred}
+\setbeamercolor{title}{fg=ACINdarktext}
+\setbeamercolor{subtitle}{fg=ACINgray}
+\setbeamercolor{frametitle}{fg=ACINdarktext}
+\setbeamercolor{normal text}{fg=ACINdarktext}
+\setbeamercolor{alerted text}{fg=ACINred}
+\setbeamercolor{example text}{fg=TUblue}
+\setbeamercolor{itemize item}{fg=ACINred}
+\setbeamercolor{itemize subitem}{fg=ACINgray}
+\setbeamercolor{enumerate item}{fg=ACINred}
+\setbeamercolor{block title}{fg=white, bg=ACINred}
+\setbeamercolor{block body}{bg=ACINred!5}
+\setbeamercolor{block title alerted}{fg=white, bg=ACINred!80!black}
+\setbeamercolor{block body alerted}{bg=ACINred!5}
+\setbeamercolor{block title example}{fg=white, bg=TUblue}
+\setbeamercolor{block body example}{bg=TUblue!5}
+\setbeamercolor{page number in head/foot}{fg=ACINgray}
+\setbeamercolor{caption name}{fg=ACINdarktext}
+
+% ── Fonts ─────────────────────────────────────────────────────────────────────
+\usefonttheme{professionalfonts}
+\setbeamerfont{title}{size=\Large, series=\bfseries}
+\setbeamerfont{subtitle}{size=\normalsize}
+\setbeamerfont{author}{size=\small, series=\bfseries}
+\setbeamerfont{date}{size=\footnotesize}
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small}
+\setbeamerfont{page number in head/foot}{size=\scriptsize}
+
+% ── Remove navigation symbols ────────────────────────────────────────────────
+\setbeamertemplate{navigation symbols}{}
+
+% ── Itemize bullets ───────────────────────────────────────────────────────────
+\setbeamertemplate{itemize item}{\small\raise1pt\hbox{\color{ACINred}\rule{0.5em}{0.5em}}}
+\setbeamertemplate{itemize subitem}{\scriptsize\raise1pt\hbox{\color{ACINgray}--}}
+
+% ── Enumerate (bold numbers) ─────────────────────────────────────────────────
+\setbeamertemplate{enumerate item}{\bfseries\insertenumlabel.}
+
+% ── Table of contents (red numbers, black text) ─────────────────────────────
+\AtBeginDocument{%
+  \setbeamertemplate{section in toc}{%
+    \leavevmode{\color{ACINred}\bfseries\inserttocsectionnumber.}~{\color{ACINdarktext}\inserttocsection}\par
+  }%
+}
+
+% ── Logo paths (override with \renewcommand if logos are elsewhere) ───────────
+\newcommand{\ACINlogopath}{logos/acin_logo.png}
+\newcommand{\ACINlogoshortpath}{logos/acin_logo_short.png}
+\newcommand{\TUWlogopath}{logos/tuwien_logo.png}
+\newcommand{\AITlogopath}{logos/ait_logo_ohne_claim_c1_rgb.jpg}
+
+% ── Title page ────────────────────────────────────────────────────────────────
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    % ACIN logo — top left
+    \node[anchor=north west, inner sep=0pt] at ([xshift=8mm, yshift=-5mm]current page.north west)
+      {\includegraphics[height=9mm]{\ACINlogopath}};
+    % TU Wien logo — top right
+    \node[anchor=north east, inner sep=0pt] at ([xshift=-8mm, yshift=-5mm]current page.north east)
+      {\includegraphics[height=11mm]{\TUWlogopath}};
+    % Red separator line
+    \draw[ACINred, line width=1pt]
+      ([xshift=0mm, yshift=-19mm]current page.north west) --
+      ([xshift=0mm, yshift=-19mm]current page.north east);
+    % AIT logo — bottom right
+    \node[anchor=south east, inner sep=0pt] at ([xshift=-8mm, yshift=6mm]current page.south east)
+      {\includegraphics[height=11mm]{\AITlogopath}};
+  \end{tikzpicture}%
+  \vspace{20mm}
+  \begin{center}
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+    \vspace{6mm}
+    {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}
+    \vspace{2mm}
+    {\usebeamerfont{author}\usebeamercolor[fg]{subtitle}\insertauthor\par}
+    \vspace{2mm}
+    {\usebeamerfont{date}\usebeamercolor[fg]{subtitle}\insertdate\par}
+  \end{center}
+}
+
+% ── Frame title ───────────────────────────────────────────────────────────────
+\setbeamertemplate{frametitle}{%
+  \vspace{2mm}%
+  \begin{beamercolorbox}[wd=\paperwidth, leftskip=5mm, rightskip=5mm]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle%
+    \ifx\insertframesubtitle\empty\else%
+      \\[1pt]{\usebeamerfont{framesubtitle}\usebeamercolor[fg]{subtitle}\insertframesubtitle}%
+    \fi%
+  \end{beamercolorbox}%
+  \vspace{-1mm}%
+  \begin{tikzpicture}[remember picture, overlay]
+    % Progress line under title (same 1pt thickness as title page separator)
+    % Full-width light gray line
+    \draw[ACINlightgray, line width=1pt]
+      ([yshift=-12mm]current page.north west) --
+      ([yshift=-12mm]current page.north east);
+    % Filled progress portion (dark gray)
+    \pgfmathsetmacro{\progresswidth}{\insertframenumber/\inserttotalframenumber*\the\paperwidth}
+    \draw[ACINgray, line width=1pt]
+      ([yshift=-12mm]current page.north west) --
+      ([yshift=-12mm, xshift=\progresswidth pt]current page.north west);
+    % ACIN short logo — top right (on content slides, 20% smaller)
+    \node[anchor=north east, inner sep=0pt] (acinlogo) at ([xshift=-5mm, yshift=-1.5mm]current page.north east)
+      {\includegraphics[height=5.6mm]{\ACINlogoshortpath}};
+    % AIT logo — to the left of ACIN, aligned to same baseline
+    \node[anchor=east, inner sep=0pt] at ([xshift=-3mm]acinlogo.west)
+      {\includegraphics[height=5.6mm]{\AITlogopath}};
+  \end{tikzpicture}%
+}
+
+% ── Agenda item command ───────────────────────────────────────────────────────
+% Usage: \agendaitem{Phase 1:}{Description text}{done}
+% Status options: done, inprogress, next, planned, future
+\definecolor{ACINgreen}{HTML}{2E7D32}
+\definecolor{ACINorange}{HTML}{E68A00}
+\definecolor{ACINstatgray}{HTML}{9E9E9E}
+
+\newcommand{\agendaitem}[3]{%
+  \item \makebox[\dimexpr\textwidth-2em\relax][s]{%
+    {\color{ACINdarktext}\textbf{#1} #2}\hfill
+    {\csname acinstat@#3\endcsname}%
+  }%
+}
+\newcommand{\acinstat@done}{\color{ACINgreen}\textbf{Done}}
+\newcommand{\acinstat@inprogress}{\color{TUblue}\textbf{In Progress}}
+\newcommand{\acinstat@next}{\color{ACINorange}\textbf{Next}}
+\newcommand{\acinstat@planned}{\color{ACINstatgray}\textbf{Planned}}
+\newcommand{\acinstat@future}{\color{ACINstatgray}\textbf{\textit{Future}}}
+
+% ── Publication showcase ──────────────────────────────────────────────────────
+% \publication[trim-bottom]{pdf_path}{Title}{Authors}{Journal/Conference, Year}
+% trim-bottom: how much to cut from the bottom of the page (default 160mm)
+%   160mm = shows ~top 45% of A4 (title+abstract), 100mm = more, 0mm = full page
+\newcommand{\publication}[5][160mm]{%
+  \begin{columns}[T]
+    \begin{column}{0.38\textwidth}
+      \fbox{\includegraphics[width=\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax,%
+        page=1, trim=0 #1 0 0, clip]{#2}}%
+    \end{column}
+    \begin{column}{0.58\textwidth}
+      \vspace{2mm}
+      {\color{ACINdarktext}\large\textbf{#3}}\par
+      \vspace{4mm}
+      {\color{ACINgray} #4}\par
+      \vspace{4mm}
+      {\color{TUblue}\itshape #5}\par
+    \end{column}
+  \end{columns}
+}
+
+% Multiple small publication thumbnails in a row
+% \pubgrid{path1}{path2}{path3}... — show up to 4 PDF covers
+\newcommand{\pubgrid}[1]{%
+  \foreach \pdffile in {#1} {%
+    \begin{minipage}[t]{0.22\textwidth}
+      \centering
+      \fbox{\includegraphics[width=0.9\textwidth, page=1]{\pdffile}}%
+    \end{minipage}\hfill
+  }%
+}
+
+
+% ── Footline with slide number (gray square, white text) ─────────────────────
+\setbeamertemplate{footline}{%
+  \hfill
+  \raisebox{3mm}[0pt][0pt]{%
+    \tikz{%
+      \node[fill=ACINlightgray, minimum size=7mm, inner sep=0pt, text=white, font=\scriptsize\bfseries]
+        {\insertframenumber};
+    }%
+  }%
+  \hspace{4mm}%
+  \vspace{3mm}%
+}
+
+\mode<all>

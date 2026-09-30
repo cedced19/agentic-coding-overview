@@ -1,0 +1,253 @@
+% ACIN / TU Wien Beamer Presentation Template
+% Compile with: xelatex main.tex (twice for references)
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage{iftex}
+\ifxetex\else\ifluatex\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+\fi\fi
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{listings}
+
+% Load the ACIN theme
+\usepackage{beamerthemeACIN}
+
+% Listings style
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{TUblue}\bfseries,
+  commentstyle=\color{ACINgray},
+  stringstyle=\color{ACINred},
+  frame=single,
+  rulecolor=\color{ACINlightgray},
+}
+
+% ── Presentation metadata ────────────────────────────────────────────────────
+\title{ACIN Beamer Template}
+\subtitle{Feature Showcase}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+% ── Title slide ──────────────────────────────────────────────────────────────
+{%
+  \setbeamertemplate{footline}{}
+  \begin{frame}[plain]
+    \titlepage
+  \end{frame}
+}
+
+% ── Table of contents ────────────────────────────────────────────────────────
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+% ── Agenda with status ────────────────────────────────────────────────────────
+\begin{frame}{Agenda}
+  \begin{itemize}\itemsep12pt
+    \agendaitem{Phase 1:}{Surrogate comparison for real-time thermal probe prediction}{done}
+    \agendaitem{Phase 2:}{Full mesh thermal field prediction (simplified geometry)}{inprogress}
+    \agendaitem{Phase 3:}{Full mesh prediction on Snake tool geometry}{next}
+    \agendaitem{Phase 4:}{Observer / controller design for Robomat}{planned}
+    \agendaitem{Phase 5:}{Thermal camera integration into feedback loop}{future}
+  \end{itemize}
+\end{frame}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Text \& Lists}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{frame}{Itemize \& Enumerate}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{Itemize list:}
+      \begin{itemize}
+        \item First-level item
+        \item Another first-level item
+          \begin{itemize}
+            \item Second-level item
+            \item Another second-level item
+          \end{itemize}
+        \item Back to first level
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{Enumerate list:}
+      \begin{enumerate}
+        \item First numbered item
+        \item Second numbered item
+        \item Third numbered item
+      \end{enumerate}
+
+      \vspace{4mm}
+      \textbf{Text styles:}\\
+      Normal, \textbf{bold}, \textit{italic}, \alert{alerted}, {\color{TUblue}colored}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Blocks \& Boxes}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{frame}{Block Environments}
+  \begin{block}{Standard Block}
+    This is a standard block with ACIN red header.
+  \end{block}
+
+  \begin{alertblock}{Alert Block}
+    This is an alert block for warnings or key points.
+  \end{alertblock}
+
+  \begin{exampleblock}{Example Block}
+    This is an example block with TU Wien blue header.
+  \end{exampleblock}
+\end{frame}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Mathematics}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{frame}{Math Showcase}
+  Inline math: the loss function $\mathcal{L}(\theta)$ is minimized.
+
+  \vspace{4mm}
+  Display equations:
+  \begin{equation}
+    \mathcal{L} = \frac{1}{N} \sum_{i=1}^{N} \left\| \mathbf{x}_i - \hat{\mathbf{x}}_i \right\|^2
+  \end{equation}
+
+  \vspace{2mm}
+  Aligned equations:
+  \begin{align}
+    \mathbf{z} &= f_{\text{enc}}(\mathbf{x}; \theta_e) \\
+    \hat{\mathbf{x}} &= f_{\text{dec}}(\mathbf{z}; \theta_d) \\
+    \hat{y} &= g(\mathbf{z}; \theta_p)
+  \end{align}
+\end{frame}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Tables \& Figures}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{frame}{Table Example}
+  \begin{table}
+    \centering
+    \begin{tabular}{lccr}
+      \toprule
+      \textbf{Method} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Time (s)} \\
+      \midrule
+      Baseline A       & 85.2\%            & 0.83              & 12.4 \\
+      Baseline B       & 87.6\%            & 0.86              & 15.1 \\
+      \alert{Proposed} & \alert{93.7\%}    & \alert{0.92}      & \alert{8.7} \\
+      \bottomrule
+    \end{tabular}
+    \caption{Comparison of methods on the test set.}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Two-Column Layout with Figure Placeholder}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      Key observations:
+      \begin{itemize}
+        \item The proposed method outperforms both baselines
+        \item Training converges in fewer epochs
+        \item Latent space dimension $d = 16$ is sufficient
+      \end{itemize}
+
+      \vspace{4mm}
+      \begin{alertblock}{Note}
+        Replace the placeholder with your own figure using \texttt{\textbackslash includegraphics}.
+      \end{alertblock}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \centering
+      % Replace with: \includegraphics[width=\textwidth]{your_figure.pdf}
+      \begin{tikzpicture}
+        \draw[ACINlightgray, thick, dashed] (0,0) rectangle (4.5,4);
+        \node[ACINgray] at (2.25,2) {\small Figure placeholder};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Code \& Misc}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{frame}[fragile]{Code Listing}
+  \begin{lstlisting}[language=Python]
+import torch
+import torch.nn as nn
+
+class Autoencoder(nn.Module):
+    def __init__(self, input_dim, latent_dim):
+        super().__init__()
+        self.encoder = nn.Sequential(
+            nn.Linear(input_dim, 128),
+            nn.ReLU(),
+            nn.Linear(128, latent_dim),
+        )
+        # decoder mirrors the encoder
+        self.decoder = nn.Sequential(
+            nn.Linear(latent_dim, 128),
+            nn.ReLU(),
+            nn.Linear(128, input_dim),
+        )
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Colors Reference}
+  The theme defines these colors for use in your slides:
+
+  \vspace{4mm}
+  \begin{tabular}{lll}
+    \texttt{ACINred}       & {\color{ACINred}\rule{2cm}{4mm}}       & \texttt{\#BA122B} \\[3pt]
+    \texttt{TUblue}        & {\color{TUblue}\rule{2cm}{4mm}}        & \texttt{\#006699} \\[3pt]
+    \texttt{ACINgray}      & {\color{ACINgray}\rule{2cm}{4mm}}      & \texttt{\#7B7B7B} \\[3pt]
+    \texttt{ACINlightgray} & {\color{ACINlightgray}\rule{2cm}{4mm}} & \texttt{\#B2B2B2} \\[3pt]
+  \end{tabular}
+\end{frame}
+
+\begin{frame}{Two-Row Title Example}{With a subtitle on the second line}
+  \begin{itemize}
+    \item The frame title and subtitle appear as two rows
+    \item Useful for longer titles that need additional context
+  \end{itemize}
+\end{frame}
+
+% ── Closing slide ────────────────────────────────────────────────────────────
+\begin{frame}{}
+  \vfill
+  \centering
+  {\Large\color{ACINgray} Thank you for your attention!}
+
+  \vspace{6mm}
+  {\small\color{ACINgray} Questions?}
+  \vfill
+\end{frame}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\appendix
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{frame}{Appendix}
+  \centering
+  \vfill
+  {\large\color{ACINgray} Supplementary Material}
+  \vfill
+\end{frame}
+
+\begin{frame}{Additional Results}
+  \begin{itemize}
+    \item Appendix slides are not counted in the main slide numbering
+    \item Use for backup material, extra figures, or detailed derivations
+  \end{itemize}
+\end{frame}
+
+\end{document}
