@@ -1,0 +1,312 @@
+% Agentic Coding Overview, 30 September 2026
+% Build with: latexmk main.tex
+\documentclass[aspectratio=169]{beamer}
+\usepackage{beamerthemeACIN}
+\usepackage{booktabs}
+\usepackage{array}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{hyperref}
+\usetikzlibrary{positioning}
+\hypersetup{colorlinks=true,urlcolor=TUblue}
+
+\title{Agentic Coding Overview}
+\subtitle{Models, harnesses, access, routing, and benchmarks}
+\author{Cédric Jung \and Jozef Janus}
+\date{30 September 2026}
+
+\newcommand{\src}[2]{\par\vfill{\fontsize{7}{8}\selectfont\color{ACINgray}Source: \href{#1}{#2}}}
+\newcommand{\tagcurrent}{{\color{TUblue}\bfseries Listed}}
+\newcommand{\tagcandidate}{{\color{ACINred}\bfseries Candidate}}
+
+\begin{document}
+
+{% Title page has its own logo treatment.
+\setbeamertemplate{footline}{}
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+}
+
+\begin{frame}{AQUEDUCT: models listed today}{Snapshot from the public overview, 30 September 2026}
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{@{}P{4.5cm}P{2.4cm}P{4.7cm}@{}}
+\toprule
+\textbf{Model} & \textbf{Context} & \textbf{Deployment note} \\
+\midrule
+DeepSeek V4 Flash 284B & 393k tokens & RTX PRO 6000 Blackwell migration \\
+Qwen 3.6 35B & 262k tokens & 4 replicas, one A40 each \\
+GLM 5.2 744B Preview & 262k tokens & 8 AMD MI300X GPUs \\
+\bottomrule
+\end{tabular}
+
+\vspace{4mm}
+\begin{block}{Transition}
+Qwen 3.5 397B reached its announced retirement date on 30 September. DeepSeek V4 Flash is its planned replacement on the Blackwell infrastructure.
+\end{block}
+\src{https://datalab.tuwien.ac.at/aiml/aqueduct/}{TU Wien AQUEDUCT overview and release notes}
+\end{frame}
+
+\begin{frame}{AQUEDUCT: what may come next}{Release-note candidates are not confirmed deployments}
+\footnotesize
+\renewcommand{\arraystretch}{1.18}
+\begin{tabular}{@{}P{4.5cm}P{4.0cm}P{3.1cm}@{}}
+\toprule
+\textbf{Candidate model} & \textbf{Discussed hardware} & \textbf{Status} \\
+\midrule
+Qwen3.8-27B & freed H200 node; possibly 4 instances & \tagcandidate \\
+DeepSeek V4 Flash Vision Exp & RTX PRO 6000 Blackwell & \tagcandidate \\
+GLM-5.3-Flash & RTX PRO 6000 Blackwell & \tagcandidate \\
+DeepSeek V4.1 Flash / GLM-5.3 & AMD MI300X & \tagcandidate \\
+\bottomrule
+\end{tabular}
+
+\vspace{2mm}
+\begin{exampleblock}{Before use}
+Check the live \texttt{/v1/models} endpoint. A release-note mention does not make a model available through AQUEDUCT.
+\end{exampleblock}
+\src{https://datalab.tuwien.ac.at/aiml/aqueduct/release-notes/}{TU Wien AQUEDUCT release notes}
+\end{frame}
+
+\begin{frame}{Hardware behind the AQUEDUCT models}{Memory and replica counts shape what can be served}
+\small
+\renewcommand{\arraystretch}{1.38}
+\begin{tabular}{@{}P{3.55cm}P{2.05cm}P{6.0cm}@{}}
+\toprule
+\textbf{Accelerator} & \textbf{Memory / GPU} & \textbf{AQUEDUCT use} \\
+\midrule
+NVIDIA A40 & 48 GB & Qwen 3.6 35B: 4 independent one-GPU replicas \\
+RTX PRO 6000 Blackwell & 96 GB & DeepSeek V4 Flash replaces the retiring Qwen 3.5 deployment \\
+NVIDIA H200 & 141 GB & Initially served DeepSeek; freed for a future deployment \\
+AMD MI300X & 192 GB & GLM 5.2 744B Preview: 8 GPUs in one replica \\
+\bottomrule
+\end{tabular}
+
+\vspace{2mm}
+{\color{ACINgray}\footnotesize Hardware mapping reflects the public overview plus migration notes; verify the live deployment before relying on it.}
+\src{https://datalab.tuwien.ac.at/aiml/aqueduct/}{TU Wien AQUEDUCT overview; \href{https://datalab.tuwien.ac.at/aiml/aqueduct/release-notes/}{release notes}}
+\end{frame}
+
+\begin{frame}{Student access to AQUEDUCT}{Access requires a request and allowlisting}
+\begin{enumerate}\itemsep8pt
+  \item \textbf{Request access} through the TU Wien AQUEDUCT access process.
+  \item \textbf{Wait for approval / allowlisting} before using the service.
+  \item \textbf{Use the issued credentials} in an API-compatible client or coding harness.
+  \item \textbf{Check available models} through the live \texttt{/v1/models} endpoint.
+\end{enumerate}
+\vspace{3mm}
+\begin{block}{Practical point}
+The public model catalog describes the service; it does not grant an account automatically.
+\end{block}
+\src{https://datalab.tuwien.ac.at/aiml/aqueduct/}{TU Wien AQUEDUCT service page; access requirement from presentation brief}
+\end{frame}
+
+\begin{frame}{Model and harness: two parts of a coding agent}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+  \begin{block}{Model: decides}
+  \begin{itemize}\itemsep5pt
+    \item Understands the task and code
+    \item Proposes edits and tool calls
+    \item Interprets tool results
+  \end{itemize}
+  \end{block}
+  \centering\small Examples: GPT, Claude, Qwen, DeepSeek
+\end{column}
+\hfill
+\begin{column}{.47\textwidth}
+  \begin{exampleblock}{Harness: executes the loop}
+  \begin{itemize}\itemsep5pt
+    \item Builds context and exposes tools
+    \item Reads files, edits code, runs tests
+    \item Manages state and permissions
+  \end{itemize}
+  \end{exampleblock}
+  \centering\small Examples: Codex, Claude Code, OpenCode
+\end{column}
+\end{columns}
+\vspace{6mm}
+\centering\large User task $\rightarrow$ harness $\leftrightarrow$ model $\rightarrow$ tested change
+\src{https://openai.com/index/unrolling-the-codex-agent-loop/}{OpenAI, \emph{Unrolling the Codex agent loop}}
+\end{frame}
+
+\begin{frame}{Post-training can include the agent loop}{Codex as a concrete example}
+\small
+\begin{center}
+\begin{tikzpicture}[>=stealth, every node/.style={font=\small}, node distance=1.4cm]
+  \node[draw=ACINred,fill=ACINred!6,rounded corners,minimum width=2.2cm,minimum height=.9cm] (task) {Coding task};
+  \node[draw=TUblue,fill=TUblue!6,rounded corners,minimum width=2.5cm,minimum height=.9cm,right=of task] (agent) {Model + tools};
+  \node[draw=ACINred,fill=ACINred!6,rounded corners,minimum width=2.6cm,minimum height=.9cm,right=of agent] (test) {Test feedback};
+  \draw[->,thick] (task) -- (agent);
+  \draw[->,thick] (agent) -- (test);
+  \draw[->,thick] (test.south) .. controls +(0,-.7) and +(0,-.7) .. node[below]{next action / training signal} (agent.south);
+\end{tikzpicture}
+\end{center}
+\vspace{3mm}
+\begin{itemize}\itemsep6pt
+  \item Coding post-training can use trajectories: inspect, edit, run tests, observe, revise.
+  \item OpenAI describes codex-1 and GPT-5-Codex as trained or optimized for agentic coding in tool-using environments.
+  \item A benchmark therefore measures the \textbf{model, harness, tools, and reasoning budget} together.
+\end{itemize}
+\src{https://openai.com/index/gpt-5-system-card-addendum-gpt-5-codex/}{OpenAI, GPT-5-Codex system-card addendum}
+\end{frame}
+
+\begin{frame}{Why LLM routing platforms exist}{One integration, several model and provider choices}
+\begin{center}
+\begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+  \node[draw=ACINgray,rounded corners,minimum width=2cm,minimum height=.9cm] (app) at (0,0) {Application};
+  \node[draw=ACINred,fill=ACINred!6,rounded corners,minimum width=2cm,minimum height=.9cm] (router) at (4,0) {Router};
+  \node[draw=TUblue,rounded corners,minimum width=2.4cm] (p1) at (8,1.2) {Provider A};
+  \node[draw=TUblue,rounded corners,minimum width=2.4cm] (p2) at (8,0) {Provider B};
+  \node[draw=TUblue,rounded corners,minimum width=2.4cm] (p3) at (8,-1.2) {Provider C};
+  \draw[->,thick] (app) -- node[above]{one API} (router);
+  \draw[->] (router) -- (p1); \draw[->] (router) -- (p2); \draw[->] (router) -- (p3);
+\end{tikzpicture}
+\end{center}
+\vspace{3mm}
+\begin{itemize}\itemsep4pt
+  \item \textbf{Model} = which neural network responds.
+  \item \textbf{Provider} = who runs it; providers vary in price, speed, region, and retention rules.
+  \item The router can select a provider, apply constraints, and fail over when needed.
+\end{itemize}
+\src{https://openrouter.ai/docs/quickstart}{OpenRouter quickstart; \href{https://www.eurouter.ai/docs/concepts/routing}{EUrouter routing docs}}
+\end{frame}
+
+\begin{frame}{OpenRouter}{Global catalog and provider routing}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\begin{block}{What it offers}
+\begin{itemize}\itemsep5pt
+  \item One API across many models
+  \item Provider ordering and filtering
+  \item Price or throughput priority
+  \item Provider and model fallback
+\end{itemize}
+\end{block}
+\end{column}
+\hfill
+\begin{column}{.48\textwidth}
+\begin{exampleblock}{Routing choices}
+\begin{itemize}\itemsep5pt
+  \item Cheapest eligible endpoint
+  \item Higher throughput endpoint
+  \item Specific provider or region
+  \item EU in-region option for eligible enterprise use
+\end{itemize}
+\end{exampleblock}
+\end{column}
+\end{columns}
+\vspace{5mm}
+\centering\small \textbf{Check the chosen provider and region} before sending sensitive code or data.
+\src{https://openrouter.ai/docs/quickstart}{OpenRouter quickstart; \href{https://openrouter.ai/docs/guides/get-started/sovereign-ai}{sovereign AI docs}}
+\end{frame}
+
+\begin{frame}{European routing and hosting options}{Different ways to constrain where inference runs}
+\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}P{2.7cm}P{4.6cm}P{4.8cm}@{}}
+\toprule
+\textbf{Service} & \textbf{Role} & \textbf{Regional control} \\
+\midrule
+EUrouter & Multi-provider model gateway & EU processing by design; provider filters \\
+Eden AI & Multi-provider AI gateway & Dedicated European endpoint \\
+Scaleway & Inference provider with many models & European-hosted serving; not a multi-provider router \\
+\bottomrule
+\end{tabular}
+\vspace{5mm}
+\begin{block}{Selection question}
+Specify processing location, provider ownership, and retention requirements separately. ``EU-hosted'' and ``EU-owned'' are different constraints.
+\end{block}
+\src{https://www.eurouter.ai/docs}{EUrouter docs; \href{https://www.edenai.co/eu}{Eden AI EU}; \href{https://www.scaleway.com/en/docs/generative-apis/faq/}{Scaleway FAQ}}
+\end{frame}
+
+\begin{frame}{Subscription versus API pricing}{Illustrative September 2026 snapshot}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+  \begin{block}{Subscription: fixed monthly fee}
+  \textbf{ChatGPT Plus: \$20/month}\par
+  Codex usage is included within plan limits. Good fit for interactive individual use.
+  \end{block}
+\end{column}
+\hfill
+\begin{column}{.48\textwidth}
+  \begin{exampleblock}{API: metered tokens}
+  \textbf{GPT-5.6 Sol: \$4/M input + \$20/M output}\par
+  Example: 5M input + 1M output $=\$40$. Good fit for programmable workflows.
+  \end{exampleblock}
+\end{column}
+\end{columns}
+\vspace{5mm}
+\small The subscription is not an API credit balance: it has product and usage limits. Caching and workload shape API cost. Recheck rates before purchasing.
+\src{https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus}{ChatGPT Plus; \href{https://developers.openai.com/api/docs/models/gpt-5.6-sol}{GPT-5.6 Sol API pricing}}
+\end{frame}
+
+\begin{frame}{Which benchmarks answer which questions?}{Keep versions, metrics, and evaluators visible}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}P{3.3cm}P{3.7cm}P{5.0cm}@{}}
+\toprule
+\textbf{Benchmark} & \textbf{Measure} & \textbf{Use / limitation} \\
+\midrule
+GDPval-AA v2.1 & Elo & Written knowledge work; proxy, not academic paper writing \\
+DeepSWE v1.1 & \% tasks resolved & Long-horizon software engineering; harness varies \\
+Terminal-Bench 4.0 & \% tasks passed & Agentic terminal work; common evaluator for chart \\
+Humanity's Last Exam & pass@1 \% & Broad expert reasoning; not science-only \\
+\bottomrule
+\end{tabular}
+\vspace{2mm}
+\begin{block}{Reading rule}
+Compare exact model revisions under the same benchmark version. Missing results mean \emph{no public exact-model score located}, not zero.
+\end{block}
+\src{https://www.tbench.ai/}{Terminal-Bench; \href{https://deepswe.datacurve.ai/}{DeepSWE}; \href{https://artificialanalysis.ai/evaluations/gdpval-aa}{GDPval-AA}}
+\end{frame}
+
+\begin{frame}{Agentic coding result: Terminal-Bench 4.0}{Approximate task pass rate, Artificial Analysis setup}
+\centering
+\begin{tikzpicture}[x=1cm,y=.52cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
+  \draw[ACINlightgray] (.15,-.25) -- (6.8,-.25);
+  \foreach \t in {0,20,40,60} {
+    \draw[ACINlightgray] ({.15+.105*\t},-.25) -- ({.15+.105*\t},7.05);
+    \node[anchor=north,ACINgray] at ({.15+.105*\t},-.3) {\t\%};
+  }
+  \foreach \label/\score/\y/\col in {{DeepSeek V4 Flash 0731}/12/6/ACINred,{DeepSeek V4 Flash Vision}/12/5/ACINred,{GLM-5.3-Flash}/33/4/ACINred,{GPT-5.6 Sol}/40/3/TUblue,{Claude Opus 5.5}/59.6/2/TUblue,{Grok 4.7}/26/1/TUblue,{Gemini 3.8 Flash}/20/0/TUblue} {
+    \node[anchor=east] at (0,\y) {\label};
+    \fill[fill=\col] (.15,\y-.26) rectangle ({.15+.105*\score},\y+.26);
+    \node[anchor=west] at ({.25+.105*\score},\y) {\score\%};
+  }
+\end{tikzpicture}
+\par\vspace{1mm}
+{\fontsize{8}{9}\selectfont\color{ACINgray}Red: open-weight comparison models; blue: proprietary frontier models. Qwen3.6-35B-A3B has no exact v4.0 result. Scores are approximate and depend on harness and reasoning settings.}
+\src{https://artificialanalysis.ai/evaluations/terminalbench-4-0}{Artificial Analysis, Terminal-Bench 4.0; model-name mapping in supplied benchmark notes}
+\end{frame}
+
+\begin{frame}{Sources and further reading}{Service, agents, and routing}
+\footnotesize
+\begin{itemize}\itemsep5pt
+  \item \href{https://datalab.tuwien.ac.at/aiml/aqueduct/}{TU Wien AQUEDUCT overview} and \href{https://datalab.tuwien.ac.at/aiml/aqueduct/release-notes/}{release notes}
+  \item \href{https://openai.com/index/unrolling-the-codex-agent-loop/}{OpenAI: Unrolling the Codex agent loop}
+  \item \href{https://openai.com/index/gpt-5-system-card-addendum-gpt-5-codex/}{OpenAI: GPT-5-Codex system-card addendum}
+  \item \href{https://openrouter.ai/docs/quickstart}{OpenRouter quickstart} and \href{https://openrouter.ai/docs/guides/get-started/sovereign-ai}{regional routing}
+  \item \href{https://www.eurouter.ai/docs}{EUrouter documentation}, \href{https://www.edenai.co/eu}{Eden AI EU}, \href{https://www.scaleway.com/en/docs/generative-apis/faq/}{Scaleway FAQ}
+  \item \href{https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus}{ChatGPT Plus} and \href{https://developers.openai.com/api/docs/models/gpt-5.6-sol}{GPT-5.6 Sol API pricing}
+\end{itemize}
+\vspace{4mm}
+\color{ACINgray}\scriptsize Deck compiled from the repository's \texttt{documentation/} research notes, dated 30 September 2026. Links are clickable in the PDF.
+\end{frame}
+
+\begin{frame}{Benchmark sources}{Exact versions and configurations matter}
+\footnotesize
+\begin{itemize}\itemsep6pt
+  \item \href{https://artificialanalysis.ai/evaluations/gdpval-aa}{Artificial Analysis: GDPval-AA v2.1}
+  \item \href{https://deepswe.datacurve.ai/}{DataCurve: DeepSWE v1.1}
+  \item \href{https://artificialanalysis.ai/evaluations/terminalbench-4-0}{Artificial Analysis: Terminal-Bench 4.0}
+  \item \href{https://artificialanalysis.ai/evaluations/humanitys-last-exam}{Artificial Analysis: Humanity's Last Exam}
+  \item \href{https://www.tbench.ai/}{Terminal-Bench project}
+\end{itemize}
+\vspace{4mm}
+\begin{block}{Interpretation}
+Agentic scores reflect model, harness, tools, and reasoning budget. Benchmark versions and evaluators must match for a fair comparison.
+\end{block}
+\end{frame}
+
+\end{document}
