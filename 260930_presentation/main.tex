@@ -15,6 +15,7 @@
 \date{30 September 2026}
 
 \newcommand{\src}[2]{\par\vfill{\fontsize{7}{8}\selectfont\color{ACINgray}Source: \href{#1}{#2}}}
+\newcommand{\srcmulti}[1]{\par\vfill{\fontsize{7}{8}\selectfont\color{ACINgray}Sources: #1}}
 \newcommand{\tagcurrent}{{\color{TUblue}\bfseries Listed}}
 \newcommand{\tagcandidate}{{\color{ACINred}\bfseries Candidate}}
 
@@ -63,7 +64,7 @@ GLM 5.2 744B Preview & 262k tokens & 8 AMD MI300X GPUs \\
 \begin{block}{Transition}
 Qwen 3.5 397B reached its announced retirement date on 30 September. DeepSeek V4 Flash is its planned replacement on the Blackwell infrastructure.
 \end{block}
-\src{https://datalab.tuwien.ac.at/aiml/aqueduct/}{TU Wien AQUEDUCT overview and release notes}
+\srcmulti{TU Wien: \href{https://datalab.tuwien.ac.at/aiml/aqueduct/}{AQUEDUCT overview}; \href{https://datalab.tuwien.ac.at/aiml/aqueduct/release-notes/}{release notes}}
 \end{frame}
 
 \begin{frame}{AQUEDUCT: what may come next}{Release-note candidates are not confirmed deployments}
@@ -103,7 +104,7 @@ AMD MI300X & 192 GB & GLM 5.2 744B Preview: 8 GPUs in one replica \\
 
 \vspace{2mm}
 {\color{ACINgray}\footnotesize Hardware mapping reflects the public overview plus migration notes; verify the live deployment before relying on it.}
-\src{https://datalab.tuwien.ac.at/aiml/aqueduct/}{TU Wien AQUEDUCT overview; \href{https://datalab.tuwien.ac.at/aiml/aqueduct/release-notes/}{release notes}}
+\srcmulti{TU Wien: \href{https://datalab.tuwien.ac.at/aiml/aqueduct/}{AQUEDUCT overview}; \href{https://datalab.tuwien.ac.at/aiml/aqueduct/release-notes/}{release notes}}
 \end{frame}
 
 \begin{frame}{Student access to AQUEDUCT}{Access requires a request and allowlisting}
@@ -117,7 +118,7 @@ AMD MI300X & 192 GB & GLM 5.2 744B Preview: 8 GPUs in one replica \\
 \begin{block}{Practical point}
 The public model catalog describes the service; it does not grant an account automatically.
 \end{block}
-\src{https://datalab.tuwien.ac.at/aiml/aqueduct/}{TU Wien AQUEDUCT service page; access requirement from presentation brief}
+\src{https://datalab.tuwien.ac.at/aiml/aqueduct/}{TU Wien AQUEDUCT service page}
 \end{frame}
 
 \begin{frame}{Model and harness: two parts of a coding agent}
@@ -188,7 +189,7 @@ The public model catalog describes the service; it does not grant an account aut
   \item \textbf{Provider} = who runs it; providers vary in price, speed, region, and retention rules.
   \item The router can select a provider, apply constraints, and fail over when needed.
 \end{itemize}
-\src{https://openrouter.ai/docs/quickstart}{OpenRouter quickstart; \href{https://www.eurouter.ai/docs/concepts/routing}{EUrouter routing docs}}
+\srcmulti{\href{https://openrouter.ai/docs/quickstart}{OpenRouter quickstart}; \href{https://www.eurouter.ai/docs/concepts/routing}{EUrouter routing docs}}
 \end{frame}
 
 \begin{frame}{OpenRouter}{Global catalog and provider routing}
@@ -217,7 +218,7 @@ The public model catalog describes the service; it does not grant an account aut
 \end{columns}
 \vspace{5mm}
 \centering\small \textbf{Check the chosen provider and region} before sending sensitive code or data.
-\src{https://openrouter.ai/docs/quickstart}{OpenRouter quickstart; \href{https://openrouter.ai/docs/guides/get-started/sovereign-ai}{sovereign AI docs}}
+\srcmulti{\href{https://openrouter.ai/docs/quickstart}{OpenRouter quickstart}; \href{https://openrouter.ai/docs/guides/get-started/sovereign-ai}{sovereign AI docs}}
 \end{frame}
 
 \begin{frame}{European routing and hosting options}{Different ways to constrain where inference runs}
@@ -236,7 +237,7 @@ Scaleway & Inference provider with many models & European-hosted serving; not a 
 \begin{block}{Selection question}
 Specify processing location, provider ownership, and retention requirements separately. ``EU-hosted'' and ``EU-owned'' are different constraints.
 \end{block}
-\src{https://www.eurouter.ai/docs}{EUrouter docs; \href{https://www.edenai.co/eu}{Eden AI EU}; \href{https://www.scaleway.com/en/docs/generative-apis/faq/}{Scaleway FAQ}}
+\srcmulti{\href{https://www.eurouter.ai/docs}{EUrouter docs}; \href{https://www.edenai.co/eu}{Eden AI EU}; \href{https://www.scaleway.com/en/docs/generative-apis/faq/}{Scaleway FAQ}}
 \end{frame}
 
 \begin{frame}{Subscription versus API pricing}{Illustrative September 2026 snapshot}
@@ -261,7 +262,7 @@ Specify processing location, provider ownership, and retention requirements sepa
 \end{beamercolorbox}
 \vspace{3mm}
 {\color{ACINred}\small\bfseries At the moment, subscription pricing can offer dramatically better effective value for a human using an AI coding agent interactively than paying standard API rates for every token.}
-\src{https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus}{ChatGPT Plus; \href{https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan}{Codex plan usage}; \href{https://developers.openai.com/api/docs/models/gpt-5.6-sol}{API pricing}}
+\srcmulti{\href{https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus}{ChatGPT Plus}; \href{https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan}{Codex plan usage}; \href{https://developers.openai.com/api/docs/models/gpt-5.6-sol}{API pricing}}
 \end{frame}
 
 \begin{frame}{Which benchmarks answer which questions?}{One result slide per benchmark follows}
@@ -281,7 +282,7 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 \end{tabular}
 \vspace{2mm}
 {\scriptsize\color{ACINgray}Charts: red = open-weight comparison models; blue = proprietary models. Compare exact versions; N/A means no public exact-model result, not zero.}
-\src{https://www.tbench.ai/}{Terminal-Bench; \href{https://deepswe.datacurve.ai/}{DeepSWE}; \href{https://artificialanalysis.ai/evaluations/gdpval-aa}{Artificial Analysis}}
+\srcmulti{\href{https://www.tbench.ai/}{Terminal-Bench}; \href{https://deepswe.datacurve.ai/}{DeepSWE}; \href{https://artificialanalysis.ai/evaluations/gdpval-aa}{Artificial Analysis}}
 \end{frame}
 
 \begin{frame}{GDPval-AA v2.1}{Professional written knowledge-work proxy; Elo, higher is better}
@@ -317,7 +318,7 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 \end{tikzpicture}
 \par\vspace{2mm}
 {\footnotesize\color{ACINgray}Qwen: no public exact-model v1.1 result. Harnesses and reasoning budgets differ across reported scores.}
-\src{https://deepswe.datacurve.ai/}{DeepSWE leaderboard; model-card and vendor results cited in supplied benchmark notes}
+\srcmulti{\href{https://deepswe.datacurve.ai/}{DeepSWE leaderboard}; \href{https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp}{DeepSeek Vision card}; \href{https://huggingface.co/zai-org/GLM-5.3-Flash}{GLM Flash card}; \href{https://deepmind.google/models/model-cards/gemini-3-8-flash/}{Gemini card}}
 \end{frame}
 
 \begin{frame}{Terminal-Bench 4.0}{Agentic terminal tasks; approximate pass rate in Artificial Analysis setup}
@@ -353,7 +354,7 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 \end{tikzpicture}
 \par\vspace{2mm}
 {\footnotesize\color{ACINgray}Several exact-model scores are unavailable. Do not compare v2.1 percentages with v4.0 percentages.}
-\src{https://www.tbench.ai/}{Terminal-Bench; model-card and vendor results cited in supplied benchmark notes}
+\srcmulti{\href{https://www.tbench.ai/}{Terminal-Bench}; \href{https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp}{DeepSeek Vision card}; \href{https://huggingface.co/zai-org/GLM-5.3-Flash}{GLM Flash card}; \href{https://deepmind.google/models/model-cards/gemini-3-8-flash/}{Gemini card}}
 \end{frame}
 
 \begin{frame}{Humanity's Last Exam}{Expert academic reasoning; text-only subset pass@1, higher is better}
@@ -371,7 +372,7 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 \end{tikzpicture}
 \par\vspace{2mm}
 {\footnotesize\color{ACINgray}Artificial Analysis uses a 2,158-question text-only subset. HLE spans humanities and mathematics as well as science.}
-\src{https://artificialanalysis.ai/evaluations/humanitys-last-exam}{Artificial Analysis, Humanity's Last Exam; Qwen model card}
+\srcmulti{\href{https://artificialanalysis.ai/evaluations/humanitys-last-exam}{Artificial Analysis HLE}; \href{https://huggingface.co/Qwen/Qwen3.6-35B-A3B}{Qwen model card}}
 \end{frame}
 
 \begin{frame}{GPQA Diamond}{Graduate-level science questions; accuracy, higher is better}
@@ -389,7 +390,7 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 \end{tikzpicture}
 \par\vspace{2mm}
 {\footnotesize\color{ACINgray}198 questions in physics, biology, and chemistry. GPT-5.6 Sol value is the Artificial Analysis result.}
-\src{https://artificialanalysis.ai/evaluations/gpqa-diamond}{Artificial Analysis, GPQA Diamond; Qwen model card}
+\srcmulti{\href{https://artificialanalysis.ai/evaluations/gpqa-diamond}{Artificial Analysis GPQA}; \href{https://huggingface.co/Qwen/Qwen3.6-35B-A3B}{Qwen model card}}
 \end{frame}
 
 \begin{frame}{Sources and further reading}{Service, agents, and routing}
