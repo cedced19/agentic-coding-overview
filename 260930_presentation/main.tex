@@ -24,7 +24,7 @@
 \newcommand{\benchmarkaxis}[3]{%
   \def\benchmax{#1}%
   \foreach \t in {#2} {%
-    \draw[ACINlightgray] ({.15+6*\t/\benchmax},-.35) -- ({.15+6*\t/\benchmax},7.35);%
+    \draw[ACINlightgray] ({.15+6*\t/\benchmax},-.35) -- ({.15+6*\t/\benchmax},8.35);%
     \node[anchor=north,ACINgray] at ({.15+6*\t/\benchmax},-.4) {\t#3};%
   }%
 }
@@ -287,10 +287,11 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 
 \begin{frame}{GDPval-AA v2.1}{Professional written knowledge-work proxy; Elo, higher is better}
 \centering
-\begin{tikzpicture}[x=1cm,y=.43cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
+\begin{tikzpicture}[x=1cm,y=.40cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
 \benchmarkaxis{2000}{0,500,1000,1500,2000}{}
-\benchbar{DeepSeek V4 Flash 0731}{1427}{7}{ACINred}{1427}
-\benchbar{Qwen3.6-35B-A3B}{879}{6}{ACINred}{879}
+\benchbar{DeepSeek V4 Flash 0731}{1427}{8}{ACINred}{1427}
+\benchbar{Qwen3.6-35B-A3B}{879}{7}{ACINred}{879}
+\benchbar{Qwen3.8-27B}{1409}{6}{ACINred}{1409}
 \benchbar{DeepSeek V4 Flash Vision}{1534}{5}{ACINred}{1534}
 \benchbar{GLM-5.3-Flash}{1641}{4}{ACINred}{1641}
 \benchbar{GPT-5.6 Sol}{1588}{3}{TUblue}{1588}
@@ -299,16 +300,17 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 \benchbar{Gemini 3.8 Flash}{1412}{0}{TUblue}{1412}
 \end{tikzpicture}
 \par\vspace{2mm}
-{\footnotesize\color{ACINgray}Same benchmark version and evaluator across all eight models. This is not a direct academic-paper-writing test.}
-\src{https://artificialanalysis.ai/evaluations/gdpval-aa}{Artificial Analysis, GDPval-AA v2.1}
+{\footnotesize\color{ACINgray}Same benchmark version and evaluator across all nine models; this is a writing proxy. Qwen3.8 uses xhigh reasoning.}
+\srcmulti{\href{https://artificialanalysis.ai/evaluations/gdpval-aa}{Artificial Analysis GDPval-AA}; \href{https://artificialanalysis.ai/models/comparisons/qwen3-8-27b-non-reasoning-vs-qwen3-8-27b}{Qwen3.8 xhigh result}}
 \end{frame}
 
 \begin{frame}{DeepSWE v1.1}{Long-horizon software engineering; resolved tasks, higher is better}
 \centering
-\begin{tikzpicture}[x=1cm,y=.43cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
+\begin{tikzpicture}[x=1cm,y=.40cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
 \benchmarkaxis{80}{0,20,40,60,80}{\%}
-\benchbar{DeepSeek V4 Flash 0731}{54.4}{7}{ACINred}{54.4\%}
-\benchna{Qwen3.6-35B-A3B}{6}
+\benchbar{DeepSeek V4 Flash 0731}{54.4}{8}{ACINred}{54.4\%}
+\benchna{Qwen3.6-35B-A3B}{7}
+\benchbar{Qwen3.8-27B}{42.2}{6}{ACINred}{42.2\%}
 \benchbar{DeepSeek V4 Flash Vision}{59.3}{5}{ACINred}{59.3\%}
 \benchbar{GLM-5.3-Flash}{63.4}{4}{ACINred}{63.4\%}
 \benchbar{GPT-5.6 Sol}{72.7}{3}{TUblue}{72.7\%}
@@ -317,16 +319,17 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 \benchbar{Gemini 3.8 Flash}{73.8}{0}{TUblue}{73.8\%}
 \end{tikzpicture}
 \par\vspace{2mm}
-{\footnotesize\color{ACINgray}Qwen: no public exact-model v1.1 result. Harnesses and reasoning budgets differ across reported scores.}
-\srcmulti{\href{https://deepswe.datacurve.ai/}{DeepSWE leaderboard}; \href{https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp}{DeepSeek Vision card}; \href{https://huggingface.co/zai-org/GLM-5.3-Flash}{GLM Flash card}; \href{https://deepmind.google/models/model-cards/gemini-3-8-flash/}{Gemini card}}
+{\footnotesize\color{ACINgray}Qwen3.8: 42.2\% from Qwen using the Claude Code harness. Other reported harnesses and settings differ.}
+\srcmulti{\href{https://deepswe.datacurve.ai/}{DeepSWE}; \href{https://huggingface.co/Qwen/Qwen3.8-27B}{Qwen3.8 card}; \href{https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp}{DeepSeek Vision}; \href{https://huggingface.co/zai-org/GLM-5.3-Flash}{GLM Flash}; \href{https://deepmind.google/models/model-cards/gemini-3-8-flash/}{Gemini}}
 \end{frame}
 
 \begin{frame}{Terminal-Bench 4.0}{Agentic terminal tasks; approximate pass rate in Artificial Analysis setup}
 \centering
-\begin{tikzpicture}[x=1cm,y=.43cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
+\begin{tikzpicture}[x=1cm,y=.40cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
 \benchmarkaxis{70}{0,20,40,60}{\%}
-\benchbar{DeepSeek V4 Flash 0731}{12}{7}{ACINred}{$\sim$12\%}
-\benchna{Qwen3.6-35B-A3B}{6}
+\benchbar{DeepSeek V4 Flash 0731}{12}{8}{ACINred}{$\sim$12\%}
+\benchna{Qwen3.6-35B-A3B}{7}
+\benchbar{Qwen3.8-27B}{6}{6}{ACINred}{$\sim$6\%}
 \benchbar{DeepSeek V4 Flash Vision}{12}{5}{ACINred}{$\sim$12\%}
 \benchbar{GLM-5.3-Flash}{33}{4}{ACINred}{$\sim$33\%}
 \benchbar{GPT-5.6 Sol}{40}{3}{TUblue}{$\sim$40\%}
@@ -335,16 +338,17 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 \benchbar{Gemini 3.8 Flash}{20}{0}{TUblue}{$\sim$20\%}
 \end{tikzpicture}
 \par\vspace{2mm}
-{\footnotesize\color{ACINgray}Qwen: no exact v4.0 score. Scores remain sensitive to harness, tools, and reasoning settings.}
-\src{https://artificialanalysis.ai/evaluations/terminalbench-4-0}{Artificial Analysis, Terminal-Bench 4.0}
+{\footnotesize\color{ACINgray}Qwen3.8: approximately 6\% in Artificial Analysis xhigh. Scores depend on harness and reasoning settings.}
+\srcmulti{\href{https://artificialanalysis.ai/evaluations/terminalbench-4-0}{Artificial Analysis Terminal-Bench 4.0}; \href{https://artificialanalysis.ai/models/comparisons/qwen3-8-27b-non-reasoning-vs-qwen3-8-27b}{Qwen3.8 xhigh result}}
 \end{frame}
 
 \begin{frame}{Terminal-Bench 2.1}{Agentic terminal tasks; published results under different setups}
 \centering
-\begin{tikzpicture}[x=1cm,y=.43cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
+\begin{tikzpicture}[x=1cm,y=.40cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
 \benchmarkaxis{100}{0,25,50,75,100}{\%}
-\benchbar{DeepSeek V4 Flash 0731}{82.7}{7}{ACINred}{82.7\%}
-\benchna{Qwen3.6-35B-A3B}{6}
+\benchbar{DeepSeek V4 Flash 0731}{82.7}{8}{ACINred}{82.7\%}
+\benchna{Qwen3.6-35B-A3B}{7}
+\benchbar{Qwen3.8-27B}{73.0}{6}{ACINred}{73.0\%}
 \benchbar{DeepSeek V4 Flash Vision}{83.9}{5}{ACINred}{83.9\%}
 \benchbar{GLM-5.3-Flash}{84.3}{4}{ACINred}{84.3\%}
 \benchbar{GPT-5.6 Sol}{88.8}{3}{TUblue}{88.8\%}
@@ -353,16 +357,17 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 \benchbar{Gemini 3.8 Flash}{89.4}{0}{TUblue}{89.4\%}
 \end{tikzpicture}
 \par\vspace{2mm}
-{\footnotesize\color{ACINgray}Several exact-model scores are unavailable. Do not compare v2.1 percentages with v4.0 percentages.}
-\srcmulti{\href{https://www.tbench.ai/}{Terminal-Bench}; \href{https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp}{DeepSeek Vision card}; \href{https://huggingface.co/zai-org/GLM-5.3-Flash}{GLM Flash card}; \href{https://deepmind.google/models/model-cards/gemini-3-8-flash/}{Gemini card}}
+{\footnotesize\color{ACINgray}Qwen3.8: vendor-reported 73.0\% using Terminus. Different setups; do not compare v2.1 with v4.0.}
+\srcmulti{\href{https://www.tbench.ai/}{Terminal-Bench}; \href{https://huggingface.co/Qwen/Qwen3.8-27B}{Qwen3.8 card}; \href{https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp}{DeepSeek Vision}; \href{https://huggingface.co/zai-org/GLM-5.3-Flash}{GLM Flash}; \href{https://deepmind.google/models/model-cards/gemini-3-8-flash/}{Gemini}}
 \end{frame}
 
 \begin{frame}{Humanity's Last Exam}{Expert academic reasoning; text-only subset pass@1, higher is better}
 \centering
-\begin{tikzpicture}[x=1cm,y=.43cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
+\begin{tikzpicture}[x=1cm,y=.40cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
 \benchmarkaxis{70}{0,20,40,60}{\%}
-\benchbar{DeepSeek V4 Flash 0731}{39}{7}{ACINred}{$\sim$39\%}
-\benchbar{Qwen3.6-35B-A3B}{21.4}{6}{ACINred}{21.4\%}
+\benchbar{DeepSeek V4 Flash 0731}{39}{8}{ACINred}{$\sim$39\%}
+\benchbar{Qwen3.6-35B-A3B}{21.4}{7}{ACINred}{21.4\%}
+\benchbar{Qwen3.8-27B}{34}{6}{ACINred}{$\sim$34\%}
 \benchbar{DeepSeek V4 Flash Vision}{34}{5}{ACINred}{$\sim$34\%}
 \benchbar{GLM-5.3-Flash}{40}{4}{ACINred}{$\sim$40\%}
 \benchbar{GPT-5.6 Sol}{49}{3}{TUblue}{$\sim$49\%}
@@ -371,16 +376,17 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 \benchbar{Gemini 3.8 Flash}{48}{0}{TUblue}{$\sim$48\%}
 \end{tikzpicture}
 \par\vspace{2mm}
-{\footnotesize\color{ACINgray}Artificial Analysis uses a 2,158-question text-only subset. HLE spans humanities and mathematics as well as science.}
-\srcmulti{\href{https://artificialanalysis.ai/evaluations/humanitys-last-exam}{Artificial Analysis HLE}; \href{https://huggingface.co/Qwen/Qwen3.6-35B-A3B}{Qwen model card}}
+{\footnotesize\color{ACINgray}AA text-only subset: Qwen3.8 approximately 34\%. Its model card reports 30.8\% under a different setup.}
+\srcmulti{\href{https://artificialanalysis.ai/evaluations/humanitys-last-exam}{Artificial Analysis HLE}; \href{https://artificialanalysis.ai/models/comparisons/qwen3-8-27b-non-reasoning-vs-qwen3-8-27b}{Qwen3.8 xhigh result}; \href{https://huggingface.co/Qwen/Qwen3.6-35B-A3B}{Qwen3.6 card}}
 \end{frame}
 
 \begin{frame}{GPQA Diamond}{Graduate-level science questions; accuracy, higher is better}
 \centering
-\begin{tikzpicture}[x=1cm,y=.43cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
+\begin{tikzpicture}[x=1cm,y=.40cm,every node/.style={font=\fontsize{8}{9}\selectfont}]
 \benchmarkaxis{100}{0,25,50,75,100}{\%}
-\benchbar{DeepSeek V4 Flash 0731}{90.8}{7}{ACINred}{90.8\%}
-\benchbar{Qwen3.6-35B-A3B}{86.0}{6}{ACINred}{86.0\%}
+\benchbar{DeepSeek V4 Flash 0731}{90.8}{8}{ACINred}{90.8\%}
+\benchbar{Qwen3.6-35B-A3B}{86.0}{7}{ACINred}{86.0\%}
+\benchbar{Qwen3.8-27B}{89.2}{6}{ACINred}{89.2\%}
 \benchbar{DeepSeek V4 Flash Vision}{91.3}{5}{ACINred}{91.3\%}
 \benchbar{GLM-5.3-Flash}{91.2}{4}{ACINred}{91.2\%}
 \benchbar{GPT-5.6 Sol}{94.1}{3}{TUblue}{94.1\%}
@@ -389,8 +395,8 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 \benchbar{Gemini 3.8 Flash}{95.3}{0}{TUblue}{95.3\%}
 \end{tikzpicture}
 \par\vspace{2mm}
-{\footnotesize\color{ACINgray}198 questions in physics, biology, and chemistry. GPT-5.6 Sol value is the Artificial Analysis result.}
-\srcmulti{\href{https://artificialanalysis.ai/evaluations/gpqa-diamond}{Artificial Analysis GPQA}; \href{https://huggingface.co/Qwen/Qwen3.6-35B-A3B}{Qwen model card}}
+{\footnotesize\color{ACINgray}Qwen3.8: vendor-reported 89.2\%. Results mix evaluators; the GPQA Diamond set has 198 questions.}
+\srcmulti{\href{https://artificialanalysis.ai/evaluations/gpqa-diamond}{Artificial Analysis GPQA}; \href{https://huggingface.co/Qwen/Qwen3.8-27B}{Qwen3.8 card}; \href{https://huggingface.co/Qwen/Qwen3.6-35B-A3B}{Qwen3.6 card}}
 \end{frame}
 
 \begin{frame}{Sources and further reading}{Service, agents, and routing}
@@ -409,13 +415,15 @@ GPQA Diamond & Accuracy \% & Graduate-level physics, biology, chemistry \\
 
 \begin{frame}{Benchmark sources}{Exact versions and configurations matter}
 \footnotesize
-\begin{itemize}\itemsep6pt
+\begin{itemize}\itemsep3pt
   \item \href{https://artificialanalysis.ai/evaluations/gdpval-aa}{Artificial Analysis: GDPval-AA v2.1}
   \item \href{https://deepswe.datacurve.ai/}{DataCurve: DeepSWE v1.1}
   \item \href{https://artificialanalysis.ai/evaluations/terminalbench-4-0}{Artificial Analysis: Terminal-Bench 4.0}
   \item \href{https://artificialanalysis.ai/evaluations/humanitys-last-exam}{Artificial Analysis: Humanity's Last Exam}
   \item \href{https://artificialanalysis.ai/evaluations/gpqa-diamond}{Artificial Analysis: GPQA Diamond}
   \item \href{https://www.tbench.ai/}{Terminal-Bench project}
+  \item \href{https://huggingface.co/Qwen/Qwen3.8-27B}{Qwen3.8-27B model card}
+  \item \href{https://artificialanalysis.ai/models/comparisons/qwen3-8-27b-non-reasoning-vs-qwen3-8-27b}{Artificial Analysis: Qwen3.8-27B xhigh results}
 \end{itemize}
 \vspace{4mm}
 \begin{block}{Interpretation}
